@@ -1,0 +1,18 @@
+db:
+  image: kamui/postgresql
+  ports:
+    - "5432"
+  environment:
+    POSTGRESQL_DB: lotus_test
+    POSTGRESQL_USER: lotus_test
+    POSTGRESQL_PASS: lotus_test
+
+app:
+  build: .
+  command: bundle exec lotus server --port=2300 --host=0.0.0.0
+  volumes:
+    - .:/application
+  ports:
+    - "2300:2300"
+  links:
+    - db

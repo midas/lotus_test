@@ -1,0 +1,5 @@
+<h1>Welcome to Lotus!</h1>
+<h3>This template is rendered by <code>LotusTest::Views::Home::Index</code> and it's available at: <code>apps/lotus_test/templates/home/index.html.erb</code></h3>
+<% ENV.each do |k,v| %>
+  <p><%= [k,v].join( ': ' ) %></p>
+<% end %>
