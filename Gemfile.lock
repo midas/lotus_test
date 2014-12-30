@@ -1,3 +1,9 @@
+PATH
+  remote: lib/lotus-form
+  specs:
+    lotus-form (0.0.1)
+      lotus-validations
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -77,6 +83,7 @@ PLATFORMS
 DEPENDENCIES
   bundler
   capybara
+  lotus-form!
   lotus-model (~> 0.2)
   lotusrb (= 0.2.0)
   minitest

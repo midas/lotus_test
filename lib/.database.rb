@@ -1,5 +1,17 @@
 require 'lotus/model'
-Dir["#{ __dir__ }/**/*.rb"].each { |file| require_relative file }
+require 'lotus/form'
+
+%w(
+	entities
+	forms
+	repositories
+).each do |dir|
+	path = File.expand_path( "../#{dir}", __FILE__ )
+
+	Dir["#{path}/**/*.rb"].each do |file|
+		require file
+	end
+end
 
 Lotus::Model.configure do
   # Database adapter
