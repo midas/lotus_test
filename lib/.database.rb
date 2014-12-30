@@ -14,18 +14,22 @@ Lotus::Model.configure do
   #    adapter type: :sql, uri: 'postgres://localhost/._development'
   #    adapter type: :sql, uri: 'mysql://localhost/._development'
   #
-  adapter type: :file_system, uri: ENV['._DATABASE_URL']
+  #adapter type: :file_system, uri: ENV['._DATABASE_URL']
+
+  #ENV['DB_URI'] = "postgres://#{ENV['DB_ENV_POSTGRESQL_USER']}:#{ENV['DB_ENV_POSTGRESQL_PASS']}@#{ENV['DB_PORT_5432_TCP_ADDR']}:#{ENV['DB_PORT_5432_TCP_PORT']}/#{ENV['DB_ENV_POSTGRESQL_DB']}"
+	#ENV['DB_URI'] = "postgres://lotus_test:lotus_test@192.168.2.3:5432/lotus_test"
+	adapter type: :sql, uri: ENV['._DATABASE_URL']
 
   ##
   # Database mapping
   #
   mapping do
-    # collection :users do
-    #   entity     User
-    #   repository UserRepository
-    #
-    #   attribute :id,   Integer
-    #   attribute :name, String
-    # end
+    collection :users do
+      entity     User
+      repository UserRepository
+
+      attribute :id,   Integer
+      attribute :name, String
+    end
   end
 end.load!

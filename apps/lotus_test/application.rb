@@ -93,13 +93,13 @@ module LotusTest
       #
       # adapter type: :file_system, uri: ENV['LOTUS_TEST_DATABASE_URL']
       #ENV['DB_URI'] = "postgres://#{ENV['DB_ENV_POSTGRESQL_USER']}:#{ENV['DB_ENV_POSTGRESQL_PASS']}@#{ENV['DB_PORT_5432_TCP_ADDR']}:#{ENV['DB_PORT_5432_TCP_PORT']}/#{ENV['DB_ENV_POSTGRESQL_DB']}"
-      ENV['DB_URI'] = "postgres://172.17.0.117:5432/lotus_test"
-      adapter type: :sql, uri: ENV['DB_URI']
+      #ENV['DB_URI'] = "postgres://172.17.0.117:5432/lotus_test"
+      #adapter type: :sql, uri: ENV['DB_URI']
 
       # Configure a database mapping
       # See: http://www.rubydoc.info/gems/lotus-model#Data_Mapper
       #
-      mapping 'config/mapping'
+      #mapping 'config/mapping'
 
       ##
       # TEMPLATES
