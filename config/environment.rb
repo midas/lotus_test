@@ -4,8 +4,8 @@ require 'lotus/setup'
 
 require_relative '../lib/.database'
 
-require_relative '../apps/lotus_test/application'
+require_relative '../apps/web/application'
 
 Lotus::Container.configure do
-  mount LotusTest::Application, at: '/'
+  mount Web::Application, at: '/'
 end

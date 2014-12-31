@@ -1,4 +1,4 @@
-module LotusTest
+module Web
   class Application < Lotus::Application
     configure do
       ##
@@ -107,7 +107,7 @@ module LotusTest
 
       # The layout to be used by all the views
       #
-      layout :application # It will load LotusTest::Views::ApplicationLayout
+      layout :application # It will load Web::Views::ApplicationLayout
 
       # The relative path where to find the templates
       #
@@ -133,7 +133,7 @@ module LotusTest
       # FRAMEWORKS
       #
 
-      # Configure the code to be yielded each time LotusTest::Action will be included
+      # Configure the code to be yielded each time Web::Action will be included
       # This is useful for share common functionalities
       #
       # See: http://www.rubydoc.info/gems/lotus-controller#Configuration
@@ -142,7 +142,7 @@ module LotusTest
         # before :authenticate!    # run an authentication before callback
       end
 
-      # Configure the code to be yielded each time LotusTest::View will be included
+      # Configure the code to be yielded each time Web::View will be included
       # This is useful for share common functionalities
       #
       # See: http://www.rubydoc.info/gems/lotus-view#Configuration

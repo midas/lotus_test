@@ -1,7 +1,7 @@
-module LotusTest
+module Web
   module Views
     class ApplicationLayout
-      include LotusTest::Layout
+      include Web::Layout
     end
   end
 end
