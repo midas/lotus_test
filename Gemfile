@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'bundler'
+gem 'grape'
 gem 'lotusrb',      '0.2.0'
 gem 'lotus-model', '~> 0.2'
 gem 'lotus-form', path: 'lib/lotus-form', require: 'lotus/form'
