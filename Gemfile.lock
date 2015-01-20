@@ -1,4 +1,16 @@
 PATH
+  remote: ../../vendor/lotus/model
+  specs:
+    lotus-model (0.2.1)
+      lotus-utils (~> 0.3, >= 0.3.2)
+      sequel (~> 4.9)
+
+PATH
+  remote: ../../vendor/lotus/utils
+  specs:
+    lotus-utils (0.3.3)
+
+PATH
   remote: lib/lotus-form
   specs:
     lotus-form (0.0.1)
@@ -58,13 +70,9 @@ GEM
       lotus-utils (~> 0.3, >= 0.3.2)
       lotus-validations (~> 0.2, >= 0.2.1)
       rack (~> 1.5)
-    lotus-model (0.2.0)
-      lotus-utils (~> 0.3, >= 0.3.2)
-      sequel (~> 4.9)
     lotus-router (0.2.0)
       http_router (~> 0.11)
       lotus-utils (~> 0.3, >= 0.3.2)
-    lotus-utils (0.3.2)
     lotus-validations (0.2.1)
       lotus-utils (~> 0.3, >= 0.3.2)
     lotus-view (0.3.0)
@@ -129,7 +137,8 @@ DEPENDENCIES
   capybara
   grape
   lotus-form!
-  lotus-model (~> 0.2)
+  lotus-model (~> 0.2)!
+  lotus-utils (~> 0.2)!
   lotusrb (= 0.2.0)
   minitest
   pg
