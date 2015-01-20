@@ -2,6 +2,7 @@ class User
 
   include Lotus::Entity
 
-  attributes :id, :name
+  attributes :id,
+             :name
 
 end

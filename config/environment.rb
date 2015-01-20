@@ -2,7 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 require 'lotus/setup'
 
-require_relative '../lib/.database'
+require_relative '../lib/lotus_test'
 
 require_relative '../apps/api/application'
 require_relative '../apps/web/application'

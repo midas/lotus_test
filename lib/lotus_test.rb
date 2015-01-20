@@ -6,7 +6,7 @@ require 'lotus/form'
 	forms
 	repositories
 ).each do |dir|
-	path = File.expand_path( "../#{dir}", __FILE__ )
+	path = File.expand_path( "../lotus_test/#{dir}", __FILE__ )
 
 	Dir["#{path}/**/*.rb"].each do |file|
 		require file
@@ -30,7 +30,13 @@ Lotus::Model.configure do
 
   #ENV['DB_URI'] = "postgres://#{ENV['DB_ENV_POSTGRESQL_USER']}:#{ENV['DB_ENV_POSTGRESQL_PASS']}@#{ENV['DB_PORT_5432_TCP_ADDR']}:#{ENV['DB_PORT_5432_TCP_PORT']}/#{ENV['DB_ENV_POSTGRESQL_DB']}"
 	#ENV['DB_URI'] = "postgres://lotus_test:lotus_test@192.168.2.3:5432/lotus_test"
-	adapter type: :sql, uri: ENV['._DATABASE_URL']
+	adapter type: :sql, uri: ENV['LOTUS_TEST_DATABASE_URL']
+
+  Money = Struct.new(:amount) do
+    def to_integer
+      amount
+    end
+  end
 
   ##
   # Database mapping
@@ -40,8 +46,10 @@ Lotus::Model.configure do
       entity     User
       repository UserRepository
 
-      attribute :id,   Integer
-      attribute :name, String
+      attribute :id,        Integer
+      attribute :name,      String
+      attribute :age,       Integer
+      attribute :net_worth, Money
     end
   end
 end.load!
