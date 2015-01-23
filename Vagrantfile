@@ -1,7 +1,8 @@
 # Commands required to setup working docker enviro, link
 # containers etc.
 $setup = <<SCRIPT
-#DEBIAN_FRONTEND=noninteractive sudo apt-get install -y postgresql-client-9.3
+DEBIAN_FRONTEND=noninteractive sudo apt-get install -y postgresql-client-9.3 python-pip
+#sudo pip install -U fig
 
 # Stop and remove any existing containers
 docker stop $(docker ps -a -q)
