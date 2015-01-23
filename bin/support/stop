@@ -1,6 +1,0 @@
-#!/bin/bash
-
-# Stop and remove the application container
-
-docker stop lotustest_app_1
-docker rm lotustest_app_1

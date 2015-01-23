@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# Start an applicaiton console in the application container
-
-docker run -i -t -v /app:/app --link lotustest_db_1:db --rm lotustest_app:latest bash -c "cd /app && bundle exec lotus console"

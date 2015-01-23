@@ -11,5 +11,4 @@ ADD Gemfile.lock /app/Gemfile.lock
 Add lib /app/lib
 RUN bundle
 
-#CMD ["bundle", "exec", "lotus", "server", "--port=2300", "--host=0.0.0.0"]
 CMD ["bin/run"]

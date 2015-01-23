@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# Stop and remove the application container, then start it again.
-
-APP_NAME=lotustest_app_1
-
-docker stop $APP_NAME
-docker rm $APP_NAME
-docker run -d -p 2300:2300 -v /app:/app --link lotustest_db_1:db --name $APP_NAME lotustest_app:latest
