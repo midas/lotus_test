@@ -1,0 +1,6 @@
+---
+env_files:
+- config/environment
+- config/phil_columns
+project_name: lotus_test
+project_type: lotus
