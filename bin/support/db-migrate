@@ -1,0 +1,2 @@
+#!/bin/bash
+docker run -i -t -v /app:/app --link lotustest_db_1:db  --rm lotustest_app:latest bash -c 'cd /app && source config/.env.development && sequel -m db/migrations $LOTUS_TEST_DATABASE_URL'

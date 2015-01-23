@@ -1,0 +1,140 @@
+#!/bin/bash
+
+# Stop and remove the application container, then start it again.
+
+APP_IMAGE=lotustest_app:latest
+APP_CONTAINER=lotustest_app_1
+APP_HOSTNAME=lotustest-app
+DB_CONTAINER=lotustest_db_1
+
+announce() {
+  echo -en "$1... "
+}
+
+say() {
+  announce "$1"
+  echo ""
+}
+
+perform() {
+  command=$1
+  output=`$command 2>&1`
+  result=$?
+  if [[ $result -eq 0 ]]; then
+    echo -e "\033[32mOK\033[0m"
+  else
+    echo -e "\033[31mERROR!\033[0m"
+    echo -e "$output" >&2
+    exit $result
+  fi
+}
+
+#echo ""
+
+bash() {
+  say "Starting app container bash"
+  docker run -i -t -h $APP_HOSTNAME -v /app:/app --link $DB_CONTAINER:db --rm $APP_IMAGE /bin/bash
+}
+
+clean() {
+  stop
+  remove
+}
+
+console() {
+  say "Starting app container console"
+  docker run -i -t -v /app:/app --link $DB_CONTAINER:db --name lotustest_app_console --rm $APP_IMAGE bash -c "cd /app && bundle exec lotus console"
+}
+
+rebuild() {
+  stop
+  remove
+
+  say "Rebuilding app container"
+  docker build -t lotustest_app /app
+
+  start
+}
+
+remove() {
+  announce "Removing app container"
+  perform "docker rm $APP_CONTAINER"
+}
+
+reset() {
+  stop
+  remove
+  run
+}
+
+restart() {
+  stop
+  start
+}
+
+run() {
+  announce "Running app container"
+  perform "docker run -d -h $APP_HOSTNAME -p 2300:2300 -v /app:/app --link $DB_CONTAINER:db --name $APP_CONTAINER $APP_IMAGE"
+}
+
+start() {
+  announce "Starting app container"
+  perform "docker start $APP_CONTAINER"
+}
+
+stop() {
+  announce "Stopping app container"
+  perform "docker stop $APP_CONTAINER"
+}
+
+usage() {
+  echo -e "Usage:\n  $0 <command>"
+  echo ""
+  echo -e "Commands:"
+  echo "  bash - Start the app container with a bash shell"
+  echo "  clean - Stop and remove the app container"
+  echo "  console - Start the app container with an application console"
+  echo "  rebuild - Stop and remove the app container, rebuild and run"
+  echo "  remove - Remove the app container, if stopped"
+  echo "  reset - Stop remove and run the app container"
+  echo "  restart - Restart the app container"
+  echo "  run - Run the app container"
+  echo "  start - Start the app container"
+  echo "  stop - Stop the app container"
+  echo ""
+  exit 1
+}
+
+if [ $# -lt 1 ]
+then
+  usage
+fi
+
+case "$1" in
+  bash) bash
+      ;;
+  clean) clean
+      ;;
+  console) console
+      ;;
+  help) usage
+      ;;
+  rebuild) rebuild
+      ;;
+  remove) remove
+      ;;
+  reset) reset
+      ;;
+  restart) restart
+      ;;
+  run) run
+      ;;
+  start) start
+      ;;
+  stop) stop
+      ;;
+  *) echo "Unknown command"
+     ;;
+esac
+
+echo ""

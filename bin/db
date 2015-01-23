@@ -1,0 +1,130 @@
+#!/bin/bash
+
+APP_IMAGE=lotustest_app:latest
+DB_IMAGE=kamui/postgresql
+DB_CONTAINER=lotustest_db_1
+DB_HOSTNAME=lotustest-db
+DB_NAME=lotus_test
+
+announce() {
+  echo -en "$1... "
+}
+
+say() {
+  announce "$1"
+  echo ""
+}
+
+perform() {
+  command=$1
+  output=`$command 2>&1`
+  result=$?
+  if [[ $result -eq 0 ]]; then
+    echo -e "\033[32mOK\033[0m"
+  else
+    echo -e "\033[31mERROR!\033[0m"
+    echo -e "$output" >&2
+    exit $result
+  fi
+}
+
+#echo ""
+
+bash() {
+  say "Starting db container bash"
+  docker run -i -t -h $DB_HOSTNAME --rm $DB_IMAGE /bin/bash
+}
+
+clean() {
+  stop
+  remove
+}
+
+migrate() {
+  say "Migrating database"
+  docker run -i -t -v /app:/app --link $DB_CONTAINER:db  --rm $APP_IMAGE bash -c 'cd /app && source config/.env.development && sequel -m db/migrations $LOTUS_TEST_DATABASE_URL'
+}
+
+reset() {
+  stop
+  remove
+  run
+  sleep 2
+  migrate
+}
+
+remove() {
+  announce "Removing db container"
+  perform "docker rm $DB_CONTAINER"
+}
+
+restart() {
+  stop
+  start
+}
+
+run() {
+  announce "Running db container"
+  perform "docker run -d --name $DB_CONTAINER -h $DB_HOSTNAME -p 5432:5432 -e POSTGRESQL_USER=$DB_NAME -e POSTGRESQL_PASS=$DB_NAME -e POSTGRESQL_DB=$DB_NAME $DB_IMAGE"
+}
+
+start() {
+  announce "Starting db container"
+  perform "docker start $DB_CONTAINER"
+}
+
+setup() {
+  migrate
+}
+
+stop() {
+  announce "Stopping db container"
+  perform "docker stop $DB_CONTAINER"
+}
+
+usage() {
+  echo -e "Usage:\n  $0 <command>"
+  echo ""
+  echo -e "Commands:"
+  echo "  bash - Start the db container with a bash shell"
+  echo "  clean - Stop and remove the db container"
+  echo "  migrate - Migrate the database"
+  echo "  reset - Stop remove and run the db container"
+  echo "  restart - Restart the db container"
+  echo "  run - Run the db container"
+  echo "  setup - Initialize and setup the database"
+  echo "  start - Start the db container"
+  echo "  stop - Stop the db container"
+  echo ""
+  exit 1
+}
+
+if [ $# -lt 1 ]
+then
+  usage
+fi
+
+case "$1" in
+  bash) bash
+      ;;
+  help) usage
+      ;;
+  migrate) migrate
+      ;;
+  reset) reset
+      ;;
+  restart) restart
+      ;;
+  run) run
+      ;;
+  setup) setup
+      ;;
+  start) start
+      ;;
+  stop) stop
+      ;;
+  *) echo "Unknown command"
+     ;;
+esac
+
+echo ""
