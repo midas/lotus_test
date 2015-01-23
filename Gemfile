@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'bundler'
-gem 'dockmaster', path: 'lib/dockmaster'
 #gem 'grape'
 gem 'lotusrb',      '0.2.0'
 gem 'lotus-model', '~> 0.2'
